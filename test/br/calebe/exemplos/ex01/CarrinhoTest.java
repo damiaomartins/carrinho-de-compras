@@ -1,5 +1,8 @@
 package br.calebe.exemplos.ex01;
 
+import java.util.ArrayList;
+import java.util.List;
+import org.junit.Assert;
 import static org.junit.Assert.assertArrayEquals;
 import org.junit.Before;
 import org.junit.Test;
@@ -52,5 +55,39 @@ public class CarrinhoTest {
     @Test(expected = IllegalArgumentException.class)
     public void adicionarObjetoNulo() throws CarrinhoVazioExpected{
         carrinho.add(null);
+    }
+    
+    @Test
+    public void listarProdutosCarrinho(){
+        Produto p1 = new Produto("Produto1", 9.99);
+        Produto p2 = new Produto("Produto2", 10.99);
+        List<Produto> produtos = new ArrayList<Produto>();
+        produtos.add(p1);
+        produtos.add(p2);
+        
+        carrinho.add(p1);
+        carrinho.add(p2);
+        List<Produto> produtosCarrinho = carrinho.listarProdutos();
+        Assert.assertArrayEquals(produtos.toArray(), produtosCarrinho.toArray());
+    }
+    
+    @Test
+    public void removerProduto(){
+        Produto p1 = new Produto("Produto1", 9.99);
+        carrinho.add(p1);
+        carrinho.remove(p1);
+        Assert.assertTrue(carrinho.isEmpty());
+    }
+    
+    @Test
+    public void totalCarrinho(){
+        Double precoP1 = 1.99;
+        Double precoP2 = 2.99;
+        Produto p1 = new Produto("Produto1", precoP1);
+        Produto p2 = new Produto("Produto2", precoP2);
+        carrinho.add(p1);
+        carrinho.add(p2);
+        Double total = carrinho.totalPagar();
+        Assert.assertEquals(precoP1 + precoP2, total, 0);
     }
 }
