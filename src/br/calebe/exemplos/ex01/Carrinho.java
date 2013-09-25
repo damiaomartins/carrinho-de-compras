@@ -2,11 +2,10 @@ package br.calebe.exemplos.ex01;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class Carrinho {
 
-    private Map<Produto,Integer> produtos;
+    private List<Produto> produtos;
 
     public Carrinho() {
         produtos = new ArrayList<>();
@@ -17,10 +16,7 @@ public class Carrinho {
 //            throw new Exception("Produto não suportado");
 //        }
         //if(produto != null)
-        Integer quantidade = produtos.get(produto);
-        if(quantidade == null)
-            produtos.put(produto,1);
-        produtos.put(produto, quantidade++);
+            produtos.add(produto);
     }
 
     public Produto menorProduto() throws CarrinhoVazioExpected {
