@@ -1,20 +1,19 @@
 package br.calebe.exemplos.ex01;
 
 public class Produto {
-    
-    enum TIPO {
-        LIVRO,
-        CADEIRA
-    }
 
     private String nome;
     private double preco;
-    private TIPO tipoProduto;
 
     public Produto(String nome, double preco) {
+        if(nome == null || nome.trim().isEmpty()){
+            throw new IllegalArgumentException();
+        }
+        if(preco < 0.0) {
+            throw new IllegalArgumentException();
+        }
         this.nome = nome;
         this.preco = preco;
-        //this.tipoProduto = tipo;
     }
 
     public double getPreco() {
@@ -27,6 +26,6 @@ public class Produto {
     }
 
     public boolean equals(Produto obj) {
-        return nome.equals(obj.nome);
+        return nome.equals(obj.nome) && preco == obj.preco;
     }
 }
