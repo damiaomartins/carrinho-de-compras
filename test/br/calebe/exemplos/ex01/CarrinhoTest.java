@@ -1,7 +1,9 @@
 package br.calebe.exemplos.ex01;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.junit.Assert;
 import static org.junit.Assert.assertArrayEquals;
 import org.junit.Before;
@@ -61,14 +63,14 @@ public class CarrinhoTest {
     public void listarProdutosCarrinho(){
         Produto p1 = new Produto("Produto1", 9.99);
         Produto p2 = new Produto("Produto2", 10.99);
-        List<Produto> produtos = new ArrayList<Produto>();
-        produtos.add(p1);
-        produtos.add(p2);
+        Map<Produto,Integer> produtos = new HashMap<Produto,Integer>();
+        produtos.put(p1,1);
+        produtos.put(p2,1);
         
         carrinho.add(p1);
         carrinho.add(p2);
-        List<Produto> produtosCarrinho = carrinho.listarProdutos();
-        Assert.assertArrayEquals(produtos.toArray(), produtosCarrinho.toArray());
+        Map<Produto,Integer> produtosCarrinho = carrinho.listarProdutos();
+        Assert.assertArrayEquals(produtos.entrySet().toArray(), produtosCarrinho.entrySet().toArray());
     }
     
     @Test
@@ -90,4 +92,21 @@ public class CarrinhoTest {
         Double total = carrinho.totalPagar();
         Assert.assertEquals(precoP1 + precoP2, total, 0);
     }
+    
+    @Test
+    public void adicionaOutroTipo(){
+        Livro livro = new Livro("Java", 100.0);
+        carrinho.add(livro);
+        Assert.assertFalse(carrinho.isEmpty());
+    }
+    
+    @Test
+    public void adicionarMesmoProduto(){
+        Produto p1 = new Produto("Produto", 10.9);
+        carrinho.add(p1);
+        carrinho.add(p1);
+        Assert.assertEquals(carrinho.quantidadeProduto(p1), 2);
+        
+    }
+    
 }

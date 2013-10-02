@@ -1,30 +1,39 @@
 package br.calebe.exemplos.ex01;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class Carrinho {
 
-    private List<Produto> produtos;
+    private Map<Produto,Integer> produtos;
 
     public Carrinho() {
-        produtos = new ArrayList<>();
+        produtos = new HashMap<Produto, Integer>();
     }
 
     public void add(Produto produto) {
-//        if(produto.getTipo() != Produto.TIPO.LIVRO) {
-//            throw new Exception("Produto não suportado");
-//        }
-        //if(produto != null)
-            produtos.add(produto);
+        if(produto == null){
+            throw new IllegalArgumentException();
+        }
+        if(produtos.get(produto)==null){
+            produtos.put(produto,1);
+        } else {
+            produtos.put(produto, produtos.get(produto)+1);
+        }
     }
 
     public Produto menorProduto() throws CarrinhoVazioExpected {
         if (produtos.isEmpty()) {
             throw new CarrinhoVazioExpected();
         }
-        Produto menor = produtos.get(0);
-        for (Produto produto : produtos) {
+        Produto menor = null;
+        for (Produto produto : produtos.keySet()) {
+            if(menor == null){
+                menor = produto;
+            }
             if (produto.getPreco() < menor.getPreco()) {
                 menor = produto;
             }
@@ -33,19 +42,27 @@ public class Carrinho {
     }
 
     void remove(Produto p1) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        produtos.remove(p1);
     }
 
     boolean isEmpty() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return produtos.isEmpty();
     }
 
     Double totalPagar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Double total = 0.0;
+        for(Entry<Produto, Integer> entry : produtos.entrySet()){
+            total += entry.getKey().getPreco() * entry.getValue();
+        }
+        return total;
     }
 
-    List<Produto> listarProdutos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    Map<Produto,Integer> listarProdutos() {
+        return produtos;
+    }
+
+    int quantidadeProduto(Produto p1) {
+        return produtos.get(p1);
     }
 
 }
