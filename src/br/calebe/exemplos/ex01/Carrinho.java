@@ -1,5 +1,6 @@
 package br.calebe.exemplos.ex01;
 
+import br.calebe.exemplos.ex02.controller.PedidoController;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.Map.Entry;
 public class Carrinho {
 
     private Map<Produto,Integer> produtos;
-
+    
     public Carrinho() {
         produtos = new HashMap<Produto, Integer>();
     }
